@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "newLine": "lf",
+    "declaration": false,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "outDir": "test/enroute/dist/",
+    "lib": ["es7", "dom"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "paths": {
+      "*": ["node_modules/*"]
+    },
+    "baseUrl": "test/enroute/",
+    "sourceMap": true,
+    "target": "es6"
+  },
+  "include": ["test/enroute/**/*.ts"],
+  "exclude": ["node_modules"],
+  "compileOnSave": false
+}

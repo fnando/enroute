@@ -1,0 +1,10 @@
+{
+  "extends": ["@fnando/codestyle/javascript", "@fnando/codestyle/typescript"],
+  "rules": {
+    "lines-between-class-members": [
+      "error",
+      "always",
+      { "exceptAfterSingleLine": true }
+    ]
+  }
+}

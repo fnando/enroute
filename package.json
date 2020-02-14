@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "devDependencies": {
+    "@fnando/codestyle": "*",
+    "@types/jest": "*",
+    "@types/lodash": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*",
+    "eslint": "*",
+    "eslint-config-prettier": "*",
+    "eslint-plugin-prettier": "*",
+    "jest": "*",
+    "lodash": "*",
+    "prettier": "*",
+    "ts-jest": "*",
+    "typescript": "*"
+  }
+}
