@@ -7,6 +7,7 @@ Gem::Specification.new do |spec|
   spec.version       = Enroute::VERSION
   spec.authors       = ["Nando Vieira"]
   spec.email         = ["me@fnando.com"]
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
 
   spec.summary       = "Export Rails routes to TypeScript definitions"
   spec.description   = spec.summary

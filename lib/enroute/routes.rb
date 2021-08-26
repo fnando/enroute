@@ -1,8 +1,24 @@
 # frozen_string_literal: true
 
 module Enroute
-  module Routes
-    extend self
+  class Routes
+    attr_reader :config_path
+
+    def self.call(config_path = "config/enroute.yml")
+      new(config_path).call
+    end
+
+    def initialize(config_path)
+      @config_path = config_path
+    end
+
+    def config
+      @config ||= if File.file?(config_path)
+                    {ignore: []}.merge(YAML.load_file(config_path))
+                  else
+                    {ignore: []}
+                  end
+    end
 
     def call
       grouped_routes.each_with_object([]) do |(_pattern, routes), buffer|
@@ -49,7 +65,9 @@ module Enroute
 
     def filtered_routes
       routes.reject do |route|
-        route.name =~ /rails|script/
+        route.name.nil? ||
+          route.name.match?(/rails|script/) ||
+          config[:ignore].include?(route.name)
       end
     end
 

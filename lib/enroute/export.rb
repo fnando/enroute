@@ -1,10 +1,19 @@
 # frozen_string_literal: true
 
 module Enroute
-  module Export
-    extend self
+  class Export
+    attr_reader :output_path, :config_path
 
-    def call(output_path)
+    def self.call(output_path, config_path)
+      new(output_path, config_path).call
+    end
+
+    def initialize(output_path, config_path)
+      @output_path = output_path
+      @config_path = config_path
+    end
+
+    def call
       FileUtils.mkdir_p(File.dirname(output_path))
 
       write_template(output_path)
@@ -19,7 +28,7 @@ module Enroute
     end
 
     def routes
-      Routes.call
+      @routes ||= Routes.call(config_path)
     end
 
     def write_template(output_path)

@@ -25,15 +25,31 @@ All you have to do is call the `enroute` binary with the main file you want to
 load and a output path.
 
 ```console
-$ bundle exec enroute --output ./app/frontend/scripts/config/routes.ts
+$ bundle exec enroute export --output ./app/frontend/scripts/config/routes.ts
 ```
 
 By default, `<pwd>/config/environment.rb` will be loaded. If you want to use a
 different file, use the `--require` switch.
 
 ```console
-$ bundle exec enroute --require ./different-file.rb --output ./routes.ts
+$ bundle exec enroute export --require ./different-file.rb --output ./routes.ts
 ```
+
+You can also ignore routes by using a config file.
+
+```console
+$ bundle exec enroute export --output ./app/frontend/scripts/config/routes.ts --config ./config/enroute.yml
+```
+
+The config file must look like this:
+
+```yaml
+---
+:ignore:
+  - route_name
+```
+
+### Importing helpers on TypeScript
 
 You can then import any route that's been exported. Parameters are positional.
 
