@@ -120,7 +120,7 @@ export type RouteHandler = RouteHelper & {
 
 <%= type_definitions %>
 
-export const routes: Route[] = <%= JSON.pretty_generate(routes) %>;
+export const routes: Route[] = <%= JSON.pretty_generate(routes.map {|route| route.except(:typings) }) %>;
 
 export const routeHandlers: RouteHandler[] = [
 <%= routes.each_with_index.map {|route, index| %[  buildRoute(routes[#{index}]) as #{route[:typeName]},] }.join("\n") %>

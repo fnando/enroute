@@ -1,3 +1,14 @@
 ---
-:ignore:
+ignore:
   - login
+
+typings:
+  _default:
+    format: string
+
+  edit_settings:
+    section: string
+    format: '"json" | "yml"'
+  toggle:
+    value: '"newsletter" | "notifications"'
+    format: string

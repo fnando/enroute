@@ -51,7 +51,7 @@ class ExportTest < Minitest::Test
       post "toggle/:value" => "toggle#update", as: "toggle"
     end
 
-    output_path = File.join(__dir__, "routes_with_filter.ts")
+    output_path = File.join(__dir__, "routes_with_config.ts")
     config_path = File.join(__dir__, "../enroute.yml")
     Enroute::Export.call(output_path, config_path)
 
@@ -61,7 +61,15 @@ class ExportTest < Minitest::Test
            Dir.pwd,
            exception: true
 
-    refute File.read(output_path).include?("login")
-    refute File.read(output_path).include?("Login")
+    output_file_contents = File.read(output_path)
+
+    refute_includes output_file_contents, "login"
+    refute_includes output_file_contents, "Login"
+    assert_includes output_file_contents,
+                    %[export const toggleUrl = (value: "newsletter" | "notifications", format?: string): string =>] # rubocop:disable Layout/LineLength
+    assert_includes output_file_contents,
+                    %[export const editSettingsUrl = (section?: string, format?: "json" | "yml"): string =>] # rubocop:disable Layout/LineLength
+    assert_includes output_file_contents,
+                    %[export const profileUrl = (format?: string): string =>]
   end
 end

@@ -13,6 +13,16 @@ module Enroute
       @config_path = config_path
     end
 
+    def config
+      @config ||= if File.file?(config_path)
+                    ActiveSupport::HashWithIndifferentAccess.new(
+                      YAML.load_file(config_path)
+                    )
+                  else
+                    {}
+                  end
+    end
+
     def call
       FileUtils.mkdir_p(File.dirname(output_path))
 
@@ -28,7 +38,7 @@ module Enroute
     end
 
     def routes
-      @routes ||= Routes.call(config_path)
+      @routes ||= Routes.call(config)
     end
 
     def write_template(output_path)
@@ -66,8 +76,12 @@ module Enroute
 
     def build_ts_args_definition(route)
       route[:segments].map do |segment|
+        type = route.dig(:typings, segment)&.chomp ||
+               config.dig(:typings, :_default, segment)&.chomp ||
+               "any"
+
         optional = route[:requiredSegments].include?(segment) ? "" : "?"
-        "#{segment.camelize(:lower)}#{optional}: any"
+        "#{segment.camelize(:lower)}#{optional}: #{type}"
       end.join(", ")
     end
 

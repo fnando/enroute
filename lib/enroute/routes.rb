@@ -2,22 +2,14 @@
 
 module Enroute
   class Routes
-    attr_reader :config_path
+    attr_reader :config
 
-    def self.call(config_path = "config/enroute.yml")
-      new(config_path).call
+    def self.call(config = {})
+      new(config).call
     end
 
-    def initialize(config_path)
-      @config_path = config_path
-    end
-
-    def config
-      @config ||= if File.file?(config_path)
-                    {ignore: []}.merge(YAML.load_file(config_path))
-                  else
-                    {ignore: []}
-                  end
+    def initialize(config)
+      @config = config
     end
 
     def call
@@ -38,7 +30,8 @@ module Enroute
         outgoingPattern: route.ast.to_s,
         method: reduce_methods(routes),
         segments: route.segments,
-        requiredSegments: route.path.required_names
+        requiredSegments: route.path.required_names,
+        typings: config.dig(:typings, route.name) || {}
       }
     end
 
@@ -67,7 +60,7 @@ module Enroute
       routes.reject do |route|
         route.name.nil? ||
           route.name.match?(/rails|script/) ||
-          config[:ignore].include?(route.name)
+          config.fetch(:ignore, []).include?(route.name)
       end
     end
 

@@ -14,7 +14,8 @@ class RoutesTest < Minitest::Test
       outgoingPattern: "/",
       method: %w[get],
       segments: [],
-      requiredSegments: []
+      requiredSegments: [],
+      typings: {}
     }
 
     assert_equal 1, routes.size
@@ -32,7 +33,8 @@ class RoutesTest < Minitest::Test
       outgoingPattern: "/home(.:format)",
       method: %w[get],
       segments: %w[format],
-      requiredSegments: []
+      requiredSegments: [],
+      typings: {}
     }
 
     assert_equal 1, routes.size
@@ -50,7 +52,9 @@ class RoutesTest < Minitest::Test
       incomingPattern: "/users(.:format)",
       outgoingPattern: "/users(.:format)",
       method: %w[get post patch put delete],
-      segments: ["format"], requiredSegments: []
+      segments: ["format"],
+      requiredSegments: [],
+      typings: {}
     }
 
     new_path = {
@@ -60,7 +64,8 @@ class RoutesTest < Minitest::Test
       outgoingPattern: "/users/new(.:format)",
       method: %w[get post patch put delete],
       segments: ["format"],
-      requiredSegments: []
+      requiredSegments: [],
+      typings: {}
     }
 
     edit_path = {
@@ -70,7 +75,8 @@ class RoutesTest < Minitest::Test
       outgoingPattern: "/users/:id/edit(.:format)",
       method: %w[get post patch put delete],
       segments: %w[id format],
-      requiredSegments: ["id"]
+      requiredSegments: ["id"],
+      typings: {}
     }
 
     show_path = {
@@ -80,7 +86,8 @@ class RoutesTest < Minitest::Test
       outgoingPattern: "/users/:id(.:format)",
       method: %w[get post patch put delete],
       segments: %w[id format],
-      requiredSegments: ["id"]
+      requiredSegments: ["id"],
+      typings: {}
     }
 
     assert_equal 4, routes.size

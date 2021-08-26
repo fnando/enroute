@@ -8,4 +8,5 @@
 /tmp/
 /node_modules
 /test/enroute/routes.ts
+/test/enroute/routes_with_config.ts
 *.lock

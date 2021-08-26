@@ -45,8 +45,23 @@ The config file must look like this:
 
 ```yaml
 ---
-:ignore:
+ignore:
   - route_name
+```
+
+By default, route params will be typed as `any`. To add a custom typing
+annotation, you can use the `typings` key on the configuration file. Imagine you
+have the route `get "settings/edit(/:section)" => "", as: "edit_settings"`; you
+can have a config file like this:
+
+```yaml
+---
+typings:
+  _default:
+    format: '"html" | "json"'
+
+  edit_settings:
+    section: string
 ```
 
 ### Importing helpers on TypeScript
