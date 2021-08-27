@@ -69,7 +69,7 @@ class ExportTest < Minitest::Test
                     %[export const toggleUrl = (value: "newsletter" | "notifications", format?: string): string =>] # rubocop:disable Layout/LineLength
     assert_includes output_file_contents,
                     %[export const editSettingsUrl = (section?: string, format?: "json" | "yml"): string =>] # rubocop:disable Layout/LineLength
-    assert_includes output_file_contents,
+    refute_includes output_file_contents,
                     %[export const profileUrl = (format?: string): string =>]
   end
 end

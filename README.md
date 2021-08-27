@@ -49,6 +49,14 @@ ignore:
   - route_name
 ```
 
+There's also a `:only` option that will include only the matching named routes.
+
+```yaml
+---
+only:
+  - route_name
+```
+
 By default, route params will be typed as `any`. To add a custom typing
 annotation, you can use the `typings` key on the configuration file. Imagine you
 have the route `get "settings/edit(/:section)" => "", as: "edit_settings"`; you

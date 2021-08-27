@@ -56,7 +56,21 @@ module Enroute
     end
 
     def filtered_routes
-      routes.reject do |route|
+      only_conditions = config.fetch(:only, [])
+
+      # If `:only` has at least one item, then select matching routes.
+      # Otherwise, use all routes.
+      selected_routes = if only_conditions.empty?
+                          routes
+                        else
+                          routes.select do |route|
+                            only_conditions.include?(route.name)
+                          end
+                        end
+
+      # Filter out unnamed routes, Rails' internal routes, and anything present
+      # on `:ignore`.
+      selected_routes.reject do |route|
         route.name.nil? ||
           route.name.match?(/rails|script/) ||
           config.fetch(:ignore, []).include?(route.name)

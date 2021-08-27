@@ -2,6 +2,10 @@
 ignore:
   - login
 
+only:
+  - edit_settings
+  - toggle
+
 typings:
   _default:
     format: string
@@ -9,6 +13,7 @@ typings:
   edit_settings:
     section: string
     format: '"json" | "yml"'
+
   toggle:
     value: '"newsletter" | "notifications"'
     format: string
