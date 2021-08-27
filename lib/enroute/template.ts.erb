@@ -90,17 +90,10 @@ function generate(route: Route): RouteHelper {
   };
 }
 
-export type PrimitiveType = number | string | null | undefined | boolean;
-export type ArrayType = AnyObject[];
-export type AnyObject = PrimitiveType | ArrayType | ObjectType | any;
-
-export interface ObjectType {
-  [key: string]: PrimitiveType | ArrayType | ObjectType;
-}
+type PrimitiveType = number | string | null | undefined | boolean;
 
 export interface Route {
   name: string;
-  typeName: string;
   pattern?: string;
   method: string[];
   segments: string[];
@@ -118,12 +111,6 @@ export type RouteHandler = RouteHelper & {
   underscore: RouteHelper;
 };
 
-<%= type_definitions %>
-
-export const routes: Route[] = <%= JSON.pretty_generate(routes.map {|route| route.except(:typings) }) %>;
-
-export const routeHandlers: RouteHandler[] = [
-<%= routes.each_with_index.map {|route, index| %[  buildRoute(routes[#{index}]) as #{route[:typeName]},] }.join("\n") %>
-];
+<%= handler_functions %>
 
 <%= route_functions %>

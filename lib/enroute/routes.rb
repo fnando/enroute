@@ -25,7 +25,6 @@ module Enroute
     def build_payload(route)
       {
         name: route.name.camelize(:lower),
-        typeName: "#{route.name.camelize}RouteHandler",
         incomingPattern: camelize_pattern(route),
         outgoingPattern: route.ast.to_s,
         method: reduce_methods(routes),

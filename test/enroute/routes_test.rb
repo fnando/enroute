@@ -9,7 +9,6 @@ class RoutesTest < Minitest::Test
     routes = Enroute::Routes.call
     expected = {
       name: "root",
-      typeName: "RootRouteHandler",
       incomingPattern: "/",
       outgoingPattern: "/",
       method: %w[get],
@@ -28,7 +27,6 @@ class RoutesTest < Minitest::Test
     routes = Enroute::Routes.call
     expected = {
       name: "home",
-      typeName: "HomeRouteHandler",
       incomingPattern: "/home(.:format)",
       outgoingPattern: "/home(.:format)",
       method: %w[get],
@@ -48,7 +46,6 @@ class RoutesTest < Minitest::Test
 
     root_path = {
       name: "users",
-      typeName: "UsersRouteHandler",
       incomingPattern: "/users(.:format)",
       outgoingPattern: "/users(.:format)",
       method: %w[get post patch put delete],
@@ -59,7 +56,6 @@ class RoutesTest < Minitest::Test
 
     new_path = {
       name: "newUser",
-      typeName: "NewUserRouteHandler",
       incomingPattern: "/users/new(.:format)",
       outgoingPattern: "/users/new(.:format)",
       method: %w[get post patch put delete],
@@ -70,7 +66,6 @@ class RoutesTest < Minitest::Test
 
     edit_path = {
       name: "editUser",
-      typeName: "EditUserRouteHandler",
       incomingPattern: "/users/:id/edit(.:format)",
       outgoingPattern: "/users/:id/edit(.:format)",
       method: %w[get post patch put delete],
@@ -81,7 +76,6 @@ class RoutesTest < Minitest::Test
 
     show_path = {
       name: "user",
-      typeName: "UserRouteHandler",
       incomingPattern: "/users/:id(.:format)",
       outgoingPattern: "/users/:id(.:format)",
       method: %w[get post patch put delete],

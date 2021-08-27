@@ -29,14 +29,6 @@ module Enroute
       write_template(output_path)
     end
 
-    def params
-      {
-        routes: routes,
-        types: routes.map {|route| build_ts_definition(route) }.join("\n"),
-        router_type: routes.map {|route| build_ts_route_definition(route) }.join
-      }
-    end
-
     def routes
       @routes ||= Routes.call(config)
     end
@@ -49,29 +41,16 @@ module Enroute
 
     def route_functions
       routes
-        .each_with_index
-        .map {|route, index| build_ts_function(route, index) }
+        .map {|route| build_ts_route_function(route) }
         .join("\n\n")
     end
 
-    def router_type_definitions
-      routes.map {|route| build_ts_route_definition(route) }.join
-    end
-
-    def type_definitions
-      routes.map {|route| build_ts_definition(route) }.join("\n")
+    def handler_functions
+      routes.map {|route| build_ts_handler_function(route) }.join("\n\n")
     end
 
     def render_template
       ERB.new(File.read("#{__dir__}/template.ts.erb")).result binding
-    end
-
-    def build_ts_definition(route)
-      [
-        "export interface #{route[:typeName]} extends RouteHandler {",
-        "  (#{build_ts_args_definition(route)}): string;",
-        "}\n"
-      ].join("\n")
     end
 
     def build_ts_args_definition(route)
@@ -85,18 +64,19 @@ module Enroute
       end.join(", ")
     end
 
-    def build_ts_function(route, index)
+    def build_ts_handler_function(route)
+      args = JSON.pretty_generate(route.except(:typings))
+      %[const #{route[:name]}Handler = buildRoute(#{args});]
+    end
+
+    def build_ts_route_function(route)
       args = build_ts_args_definition(route)
       segments = route[:segments].map {|segment| segment.camelize(:lower) }
 
       [
         %[export const #{route[:name]}Url = (#{args}): string =>],
-        %[  routeHandlers[#{index}](#{segments.join(', ')});]
+        %[  #{route[:name]}Handler(#{segments.join(', ')});]
       ].join("\n")
-    end
-
-    def build_ts_route_definition(route)
-      %[\n  #{route[:name]}: #{route[:typeName]};]
     end
   end
 end
