@@ -3,6 +3,10 @@
 Generates a TypeScript file that defines all named routes from Rails as helper
 functions.
 
+[![Tests](https://github.com/fnando/enroute/workflows/tests/badge.svg)](https://github.com/fnando/enroute)
+[![Gem](https://img.shields.io/gem/v/enroute.svg)](https://rubygems.org/gems/enroute)
+[![Gem](https://img.shields.io/gem/dt/enroute.svg)](https://rubygems.org/gems/enroute)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -114,33 +118,27 @@ userUrl();
 //=> raises `id is required, but received undefined`
 ```
 
-## Development
+## Maintainer
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run
-`rake test` to run the tests. You can also run `bin/console` for an interactive
-prompt that will allow you to experiment.
+- [Nando Vieira](https://github.com/fnando)
 
-To install this gem onto your local machine, run `bundle exec rake install`. To
-release a new version, update the version number in `version.rb`, and then run
-`bundle exec rake release`, which will create a git tag for the version, push
-git commits and tags, and push the `.gem` file to
-[rubygems.org](https://rubygems.org).
+## Contributors
+
+- https://github.com/fnando/enroute/contributors
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at
-https://github.com/fnando/enroute. This project is intended to be a safe,
-welcoming space for collaboration, and contributors are expected to adhere to
-the
-[code of conduct](https://github.com/fnando/enroute/blob/master/CODE_OF_CONDUCT.md).
+For more details about how to contribute, please read
+https://github.com/fnando/enroute/blob/main/CONTRIBUTING.md.
 
 ## License
 
 The gem is available as open source under the terms of the
-[MIT License](https://opensource.org/licenses/MIT).
+[MIT License](https://opensource.org/licenses/MIT). A copy of the license can be
+found at https://github.com/fnando/enroute/blob/main/LICENSE.md.
 
 ## Code of Conduct
 
-Everyone interacting in the Enroute project's codebases, issue trackers, chat
-rooms and mailing lists is expected to follow the
-[code of conduct](https://github.com/fnando/enroute/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the enroute project's codebases, issue
+trackers, chat rooms and mailing lists is expected to follow the
+[code of conduct](https://github.com/fnando/enroute/blob/main/CODE_OF_CONDUCT.md).

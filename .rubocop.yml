@@ -5,6 +5,6 @@ inherit_gem:
 AllCops:
   TargetRubyVersion: 2.7
   NewCops: enable
-
-Metrics:
-  Enabled: false
+  Exclude:
+    - vendor/**/*
+    - gemfiles/**/*

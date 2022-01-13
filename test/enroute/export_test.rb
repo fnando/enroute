@@ -3,7 +3,18 @@
 require "test_helper"
 
 class ExportTest < Minitest::Test
-  test "exports routes" do
+  setup do
+    %w[routes.ts routes_with_config.ts].each do |file|
+      path = File.join(__dir__, file)
+
+      File.unlink(path) if File.file?(path)
+    end
+
+    export_routes_ts
+    export_routes_with_config_ts
+  end
+
+  def export_routes_ts
     with_routes do
       root to: "pages#home"
 
@@ -22,19 +33,9 @@ class ExportTest < Minitest::Test
 
     output_path = File.join(__dir__, "routes.ts")
     Enroute::Export.call(output_path, "enroute.yml")
-
-    system "tsc",
-           "--noEmit",
-           "--project",
-           Dir.pwd,
-           exception: true
-
-    system "jest",
-           File.join(Dir.pwd, "test/enroute/enroute.test.ts"),
-           exception: true
   end
 
-  test "exports routes with config" do
+  def export_routes_with_config_ts
     with_routes do
       root to: "pages#home"
 
@@ -54,14 +55,32 @@ class ExportTest < Minitest::Test
     output_path = File.join(__dir__, "routes_with_config.ts")
     config_path = File.join(__dir__, "../enroute.yml")
     Enroute::Export.call(output_path, config_path)
+  end
 
-    system "tsc",
+  test "exports routes" do
+    system "yarn",
+           "tsc",
            "--noEmit",
            "--project",
            Dir.pwd,
            exception: true
 
-    output_file_contents = File.read(output_path)
+    system "yarn",
+           "jest",
+           File.join(Dir.pwd, "test/enroute/enroute.test.ts"),
+           exception: true
+  end
+
+  test "exports routes with config" do
+    system "yarn",
+           "tsc",
+           "--noEmit",
+           "--project",
+           Dir.pwd,
+           exception: true
+
+    output_file_contents =
+      File.read(File.join(__dir__, "routes_with_config.ts"))
 
     refute_includes output_file_contents, "login"
     refute_includes output_file_contents, "Login"
