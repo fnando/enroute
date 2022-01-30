@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 require "thor"
+
+begin
+  require "active_support/isolated_execution_state"
+rescue LoadError
+  # noop
+end
+
 require "active_support/core_ext/hash"
 require "active_support/hash_with_indifferent_access"
 require "fileutils"
