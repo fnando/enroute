@@ -42,7 +42,7 @@ module Enroute
     end
 
     def reduce_methods(routes)
-      routes.map(&:verb).flatten.map(&:downcase).uniq
+      routes.map(&:verb).flatten.map(&:downcase).uniq.reject(&:empty?)
     end
 
     def camelize_map(list)
@@ -72,7 +72,7 @@ module Enroute
       # on `:ignore`.
       selected_routes.reject do |route|
         route.name.nil? ||
-          route.name.match?(/rails|script/) ||
+          route.name.match?(/rails|script|turbo/) ||
           config.fetch(:ignore, []).include?(route.name)
       end
     end
