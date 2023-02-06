@@ -110,6 +110,24 @@ export type RouteHandler = RouteHelper & {
   underscore: RouteHelper;
 };
 
+const baseUrl = location.protocol + "//" + location.host;
+
+const buildUrl = (
+  path: string,
+  params: Record<string, unknown>
+): {path: string; url: string} => {
+  const url = new URL(baseUrl + path);
+
+  Object.keys(params).forEach((key) => {
+    url.searchParams.set(key, String(params[key]));
+  });
+
+  return {
+    path: url.pathname + url.search,
+    url: url.toString(),
+  };
+}
+
 <%= handler_functions %>
 
 <%= route_functions %>

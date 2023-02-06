@@ -8,3 +8,9 @@ AllCops:
   Exclude:
     - vendor/**/*
     - gemfiles/**/*
+
+Minitest/MultipleAssertions:
+  Enabled: false
+
+Gemspec/DevelopmentDependencies:
+  Enabled: false

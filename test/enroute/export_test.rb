@@ -85,10 +85,16 @@ class ExportTest < Minitest::Test
     refute_includes output_file_contents, "login"
     refute_includes output_file_contents, "Login"
     assert_includes output_file_contents,
-                    %[export const toggleUrl = (value: "newsletter" | "notifications", format?: string): string =>] # rubocop:disable Layout/LineLength
+                    %[export function togglePath(value: "newsletter" | "notifications", format?: string, params: Record<string, unknown> = {}): string {] # rubocop:disable Layout/LineLength
     assert_includes output_file_contents,
-                    %[export const editSettingsUrl = (section?: string, format?: "json" | "yml"): string =>] # rubocop:disable Layout/LineLength
+                    %[export function toggleUrl(value: "newsletter" | "notifications", format?: string, params: Record<string, unknown> = {}): string {] # rubocop:disable Layout/LineLength
+    assert_includes output_file_contents,
+                    %[export function editSettingsPath(section?: string, format?: "json" | "yml", params: Record<string, unknown> = {}): string {] # rubocop:disable Layout/LineLength
+    assert_includes output_file_contents,
+                    %[export function editSettingsUrl(section?: string, format?: "json" | "yml", params: Record<string, unknown> = {}): string {] # rubocop:disable Layout/LineLength
     refute_includes output_file_contents,
-                    %[export const profileUrl = (format?: string): string =>]
+                    %[export function profilePath(format?: string, params: Record<string, unknown> = {}): string {] # rubocop:disable Layout/LineLength
+    refute_includes output_file_contents,
+                    %[export function profileUrl(format?: string, params: Record<string, unknown> = {}): string {] # rubocop:disable Layout/LineLength
   end
 end
