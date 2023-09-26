@@ -24,6 +24,7 @@ module Enroute
 
     def build_payload(route)
       {
+        subdomain: route.constraints[:subdomain] || "",
         name: route.name.camelize(:lower),
         incomingPattern: camelize_pattern(route),
         outgoingPattern: route.ast.to_s,

@@ -5,6 +5,7 @@
     "newLine": "lf",
     "declaration": false,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "test/enroute/dist/",

@@ -1,3 +1,9 @@
+// @ts-expect-error
+global.location = {
+  protocol: "http:",
+  host: "localhost",
+};
+
 import {
   editProfilePath,
   editSettingsPath,

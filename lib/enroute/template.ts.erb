@@ -2,7 +2,7 @@
 // This file has been automatically generated.
 // Don't edit it manually. Use `enroute export` instead.
 
-import { zipObject } from "lodash";
+import zipObject from "lodash/zipObject";
 
 function camelize(text: string): string {
   return text.replace(
@@ -92,6 +92,7 @@ function generate(route: Route): RouteHelper {
 type PrimitiveType = number | string | null | undefined | boolean;
 
 export interface Route {
+  subdomain: string;
   name: string;
   pattern?: string;
   method: string[];
