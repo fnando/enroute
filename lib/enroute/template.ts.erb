@@ -2,7 +2,13 @@
 // This file has been automatically generated.
 // Don't edit it manually. Use `enroute export` instead.
 
-import { zipObject } from "lodash";
+function zipObject(keys: string[], values: unknown[]): Record<string, unknown> {
+  return keys.reduce((buffer, key, index) =>
+    Object.assign(
+      buffer,
+      {[key]: values[index]}
+    ), {} as Record<string, unknown>)
+}
 
 function camelize(text: string): string {
   return text.replace(

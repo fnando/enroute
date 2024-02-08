@@ -83,10 +83,10 @@ You can then import any route that's been exported. Parameters are positional.
 ```typescript
 import { userUrl } from "./routes";
 
-userUrl(1234);
+userUrl({ id: 1234 });
 //=> "/users/1234"
 
-userUrl(1234, "json");
+userUrl({ id: 1234, format: "json" });
 //=> "/users/1234.json"
 ```
 
@@ -100,7 +100,7 @@ import { editSettingsUrl } from "./routes";
 editSettingsUrl();
 //=> "/settings/edit"
 
-editSettingsUrl("security");
+editSettingsUrl({ section: "security" });
 //=> "/settings/edit/security"
 ```
 
@@ -139,6 +139,6 @@ found at https://github.com/fnando/enroute/blob/main/LICENSE.md.
 
 ## Code of Conduct
 
-Everyone interacting in the enroute project's codebases, issue
-trackers, chat rooms and mailing lists is expected to follow the
+Everyone interacting in the enroute project's codebases, issue trackers, chat
+rooms and mailing lists is expected to follow the
 [code of conduct](https://github.com/fnando/enroute/blob/main/CODE_OF_CONDUCT.md).

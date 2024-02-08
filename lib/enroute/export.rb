@@ -54,16 +54,21 @@ module Enroute
     end
 
     def build_ts_args_definition(route)
-      args = route[:segments].map do |segment|
+      args = route[:segments].each_with_object([]) do |segment, buffer|
         type = route.dig(:typings, segment)&.chomp ||
                config.dig(:typings, :_default, segment)&.chomp ||
                "any"
 
         optional = route[:requiredSegments].include?(segment) ? "" : "?"
-        "#{segment.camelize(:lower)}#{optional}: #{type}"
+
+        buffer << "#{segment.camelize(:lower)}#{optional}: #{type}"
       end
 
-      (args + ["params: Record<string, unknown> = {}"]).join(", ")
+      args << "params?: Record<string, unknown>"
+
+      "args?: {#{args.join('; ')}}"
+
+      # (args + ["params: Record<string, unknown> = {}"]).join(", ")
     end
 
     def build_ts_handler_function(route)
@@ -75,14 +80,17 @@ module Enroute
       args = build_ts_args_definition(route)
 
       segments = route[:segments].map {|segment| segment.camelize(:lower) }
+      destruct = [segments.join(", "), "params"].reject(&:blank?).join(", ")
 
       <<~TYPESCRIPT
         export function #{route[:name]}Url(#{args}): string {
-          return buildUrl(#{route[:name]}Handler(#{segments.join(', ')}), params).url;
+          const {#{destruct}} = args ?? {};
+          return buildUrl(#{route[:name]}Handler(#{segments.join(', ')}), params ?? {}).url;
         }
 
         export function #{route[:name]}Path(#{args}): string {
-          return buildUrl(#{route[:name]}Handler(#{segments.join(', ')}), params).path;
+          const {#{destruct}} = args ?? {};
+          return buildUrl(#{route[:name]}Handler(#{segments.join(', ')}), params ?? {}).path;
         }
       TYPESCRIPT
     end

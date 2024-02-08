@@ -24,6 +24,10 @@ class ExportTest < Minitest::Test
 
       resource :profile
 
+      scope "(:locale)" do
+        get "details/:id" => "details#show", as: "details"
+      end
+
       get "login" => "login#new", as: "login"
       post "login" => "login#create"
       delete "logout" => "login#destroy"
@@ -85,16 +89,16 @@ class ExportTest < Minitest::Test
     refute_includes output_file_contents, "login"
     refute_includes output_file_contents, "Login"
     assert_includes output_file_contents,
-                    %[export function togglePath(value: "newsletter" | "notifications", format?: string, params: Record<string, unknown> = {}): string {] # rubocop:disable Layout/LineLength
+                    %[export function togglePath(args?: {value: "newsletter" | "notifications"; format?: string; params?: Record<string, unknown>}): string {] # rubocop:disable Layout/LineLength
     assert_includes output_file_contents,
-                    %[export function toggleUrl(value: "newsletter" | "notifications", format?: string, params: Record<string, unknown> = {}): string {] # rubocop:disable Layout/LineLength
+                    %[export function toggleUrl(args?: {value: "newsletter" | "notifications"; format?: string; params?: Record<string, unknown>}): string {] # rubocop:disable Layout/LineLength
     assert_includes output_file_contents,
-                    %[export function editSettingsPath(section?: string, format?: "json" | "yml", params: Record<string, unknown> = {}): string {] # rubocop:disable Layout/LineLength
+                    %[export function editSettingsPath(args?: {section?: string; format?: "json" | "yml"; params?: Record<string, unknown>}): string {] # rubocop:disable Layout/LineLength
     assert_includes output_file_contents,
-                    %[export function editSettingsUrl(section?: string, format?: "json" | "yml", params: Record<string, unknown> = {}): string {] # rubocop:disable Layout/LineLength
+                    %[export function editSettingsUrl(args?: {section?: string; format?: "json" | "yml"; params?: Record<string, unknown>}): string {] # rubocop:disable Layout/LineLength
     refute_includes output_file_contents,
-                    %[export function profilePath(format?: string, params: Record<string, unknown> = {}): string {] # rubocop:disable Layout/LineLength
+                    %[export function profilePath(args?: {format?: string; params: Record<string, unknown>}): string {] # rubocop:disable Layout/LineLength
     refute_includes output_file_contents,
-                    %[export function profileUrl(format?: string, params: Record<string, unknown> = {}): string {] # rubocop:disable Layout/LineLength
+                    %[export function profileUrl(args?: {format?: string; params: Record<string, unknown>}): string {] # rubocop:disable Layout/LineLength
   end
 end
